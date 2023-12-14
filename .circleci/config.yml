@@ -1,0 +1,56 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.1.0
+  slack: circleci/slack@4.12.5
+
+commands:
+  install_dependencies:
+    steps:
+      - run: yarn install
+
+  linter:
+    steps:
+      - run:
+          name: Linter
+          command: yarn lint
+  builder:
+    steps:
+      - run:
+          name: Build Docker Image
+          command: |
+            docker build -t app ./app
+  notify_slack_pass:
+    steps:
+      - slack/notify:
+          event: pass
+          template: basic_success_1
+
+  notify_slack_fail:
+    steps:
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+
+jobs:
+  lint:
+    docker:
+      - image: cimg/node:18.0
+    steps:
+      - checkout
+      - install_dependencies
+      - linter
+      - notify_slack_fail
+  build:
+    steps:
+      - builder
+      - notify_slack_pass
+      - notify_slack_fail
+
+workflows:
+  build:
+    jobs:
+      - lint
+      - build
+        - requires:
+            - lint
+
