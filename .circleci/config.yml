@@ -44,7 +44,7 @@ jobs:
     steps:
       - checkout
       - change_work_dir:
-          directory: app
+          directory: "app"
       - install_dependencies
       - linter
       - notify_slack_fail
@@ -55,7 +55,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - change_work_dir:
-          directory: app
+          directory: "app"
       - builder
       - notify_slack_pass
       - notify_slack_fail
