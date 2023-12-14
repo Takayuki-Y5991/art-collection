@@ -42,7 +42,7 @@ jobs:
       - image: cimg/node:18.0
     steps:
       - checkout
-      - change_work_dir: directory=app
+      - change_work_dir: app
       - install_dependencies
       - linter
       - notify_slack_fail
@@ -52,7 +52,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - change_work_dir: directory=app
+      - change_work_dir: app
       - builder
       - notify_slack_pass
       - notify_slack_fail
