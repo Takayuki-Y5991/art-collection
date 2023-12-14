@@ -6,9 +6,11 @@ orbs:
 commands:
   install_dependencies:
     steps:
-      - run: |
-        cd app
-        yarn install
+      - run:
+          name: Installing dependencies
+          command: |
+            cd app
+            yarn install
 
   linter:
     steps:
