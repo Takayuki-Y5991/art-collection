@@ -5,10 +5,11 @@ orbs:
 
 commands:
   change_work_dir:
+    description: "Change working directory"
     parameters:
       directory: string
     steps:
-      - run: cd $directory
+      - run: cd << parameters.directory >>
   install_dependencies:
     steps:
       - run:
