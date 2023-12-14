@@ -51,6 +51,7 @@ jobs:
     docker:
       - image: cimg/node:18.0
     steps:
+    　- checkout
       - builder
       - notify_slack_pass
       - notify_slack_fail
