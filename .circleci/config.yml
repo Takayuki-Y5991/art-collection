@@ -52,6 +52,7 @@ jobs:
       - image: cimg/node:18.0
     steps:
       - checkout
+      - setup_remote_docker
       - builder
       - notify_slack_pass
       - notify_slack_fail
