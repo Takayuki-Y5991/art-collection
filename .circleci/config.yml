@@ -41,6 +41,8 @@ jobs:
       - linter
       - notify_slack_fail
   build:
+    docker:
+      - image: cimg/node:18.0
     steps:
       - builder
       - notify_slack_pass
