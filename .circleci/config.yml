@@ -50,7 +50,6 @@ workflows:
   build:
     jobs:
       - lint
-      - build
-        requires:
-          - lint
-
+      - build:
+          requires:
+            - lint
