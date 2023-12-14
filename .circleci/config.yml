@@ -24,7 +24,8 @@ commands:
       - run:
           name: Build Docker Image
           command: |
-            docker build -t app ./app
+            cd app
+            docker build -t app .
   notify_slack_pass:
     steps:
       - slack/notify:
