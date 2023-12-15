@@ -1,7 +1,7 @@
 # Build stage
 FROM node:18-alpine3.18 as builder
 WORKDIR /app
-COPY ../package.json ../yarn.lock ./
+COPY package.json yarn.lock ./
 RUN yarn install
 COPY . .
 RUN yarn build
