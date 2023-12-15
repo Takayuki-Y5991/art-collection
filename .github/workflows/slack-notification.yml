@@ -17,6 +17,8 @@ on:
       s-slack-message:
         required: true
         type: string
+env:
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 jobs:
   slack-notify:
@@ -34,7 +36,6 @@ jobs:
         if: ${{ failure() }}
         env:
           SLACK_USERNAME: CI Github Actions
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
           SLACK_TITLE: ${{ inputs.f-slack-title }}
           SLACK_COLOR: danger
