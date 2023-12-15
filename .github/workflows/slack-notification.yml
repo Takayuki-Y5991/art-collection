@@ -17,8 +17,6 @@ on:
       s-slack-message:
         required: true
         type: string
-env:
-  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 jobs:
   slack-notify:
@@ -28,6 +26,9 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         if: ${{ success() }}
         env:
+          SLACK_USERNAME: CI Github Actions
+          SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_TITLE: ${{ inputs.s-slack-title }}
           SLACK_COLOR: good
           SLACK_MESSAGE: ${{ inputs.s-slack-message }}
@@ -37,6 +38,7 @@ jobs:
         env:
           SLACK_USERNAME: CI Github Actions
           SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_TITLE: ${{ inputs.f-slack-title }}
           SLACK_COLOR: danger
           SLACK_MESSAGE: ${{ inputs.f-slack-message }}
