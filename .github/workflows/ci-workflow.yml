@@ -42,10 +42,33 @@ jobs:
       - name: Build Docekr image
         working-directory: ./app
         run: docker build . -t app
-  notify-slack:
-    if: always()
-    needs: building-stage
-    uses: ./.github/workflows/slack-notification.yml
-    with:
-      f-slack-message: CI Failed! Please confirm.
-      s-slack-message: CI Completion! Good job.
+  # notify-slack:
+  #   if: always()
+  #   needs: building-stage
+  #   uses: ./.github/workflows/slack-notification.yml
+  #   with:
+  #     f-slack-message: CI Failed! Please confirm.
+  #     s-slack-message: CI Completion! Good job.
+  slack-notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Slack Notification Successful
+        uses: rtCamp/action-slack-notify@v2
+        if: ${{ success() }}
+        env:
+          SLACK_USERNAME: CI Github Actions
+          SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_TITLE: Successfully🎉
+          SLACK_COLOR: good
+          SLACK_MESSAGE: CI Failed! Please confirm.
+      - name: Send Slack Notification failureful
+        uses: rtCamp/action-slack-notify@v2
+        if: ${{ failure() }}
+        env:
+          SLACK_USERNAME: CI Github Actions
+          SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_TITLE: Failurefully⚠️
+          SLACK_COLOR: danger
+          SLACK_MESSAGE: CI Completion! Good job.
