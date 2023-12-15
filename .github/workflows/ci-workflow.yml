@@ -61,7 +61,7 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_TITLE: Successfully🎉
           SLACK_COLOR: good
-          SLACK_MESSAGE: CI Failed! Please confirm.
+          SLACK_MESSAGE: CI Completion! Good job.
       - name: Send Slack Notification failureful
         uses: rtCamp/action-slack-notify@v2
         if: ${{ failure() }}
@@ -71,4 +71,4 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_TITLE: Failurefully⚠️
           SLACK_COLOR: danger
-          SLACK_MESSAGE: CI Completion! Good job.
+          SLACK_MESSAGE: CI Failed! Please confirm.
