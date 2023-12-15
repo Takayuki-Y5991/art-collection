@@ -15,9 +15,6 @@ on:
       slack-channel:
         required: true
         type: string
-      webhook-url:
-        required: true
-        type: string
 
 jobs:
   slack-notify:

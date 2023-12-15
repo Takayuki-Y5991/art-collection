@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Chackout reqpository
+      - name: Checkout reqpository
         uses: actions/checkout@v3
 
       - name: Set up Node.js
@@ -48,4 +48,3 @@ jobs:
       job-name: "Build and Lint"
       github-run-id: ${{ github.run_id }}
       slack-channel: "C069XE26M38"
-      webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
