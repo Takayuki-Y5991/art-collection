@@ -40,8 +40,7 @@ jobs:
         run: yarn lint
 
       - name: Build Docekr image
-        working-directory: ./app
-        run: docker build -f app/Dockerfile -t app .
+        run: docker build -f ./app/Dockerfile -t app .
   # notify-slack:
   #   if: always()
   #   needs: building-stage
