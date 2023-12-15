@@ -1,0 +1,51 @@
+name: CI workflows
+
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  building-stage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Chackout reqpository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.yarn
+            **/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run linter
+        run: yarn lint
+
+      - name: Build Docekr image
+        run: docker build -f app/Dockerfile -t app .
+  notify-slack:
+    if: always()
+    needs: building-stage
+    uses: ./.github/workflows/slack-notification.yml
+    with:
+      status: ${{ needs.building-stage }}
+      job-name: "Build and Lint"
+      github-run-id: ${{ github.run_id }}
+      slack-channel: "C069XE26M38"
+      webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
