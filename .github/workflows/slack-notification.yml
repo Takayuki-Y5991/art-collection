@@ -1,10 +1,5 @@
 name: Slack Notification
 
-env:
-  SLACK_USERNAME: CI Github Actions
-  SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
-  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-
 on:
   workflow_call:
     inputs:
@@ -38,6 +33,9 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         if: ${{ failure() }}
         env:
+          SLACK_USERNAME: CI Github Actions
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
           SLACK_TITLE: ${{ inputs.f-slack-title }}
           SLACK_COLOR: danger
           SLACK_MESSAGE: ${{ inputs.f-slack-message }}
