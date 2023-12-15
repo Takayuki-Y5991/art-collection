@@ -20,7 +20,8 @@ jobs:
   slack-notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Send Slack Notification
+      - id: slack
+        name: Send Slack Notification
         uses: slackapi/slack-github-action@v1.15.0
         with:
           channel-id: ${{ inputs.slack-channel }}
