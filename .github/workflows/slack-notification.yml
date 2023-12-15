@@ -1,18 +1,25 @@
 name: Slack Notification
 
+env:
+  SLACK_USERNAME: CI Github Actions
+  SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+
 on:
   workflow_call:
     inputs:
-      status:
+      f-slack-title:
+        required: false
+        type: string
+        default: Failurefully⚠️
+      f-slack-message:
         required: true
         type: string
-      job-name:
-        required: true
+      s-slack-title:
+        required: false
         type: string
-      github-run-id:
-        required: true
-        type: string
-      slack-channel:
+        default: Successfully🎉
+      s-slack-message:
         required: true
         type: string
 
@@ -20,11 +27,17 @@ jobs:
   slack-notify:
     runs-on: ubuntu-latest
     steps:
-      - id: slack
-        name: Send Slack Notification
-        uses: slackapi/slack-github-action@v1.15.0
-        with:
-          channel-id: ${{ inputs.slack-channel }}
-          slack-message: "Job ${{ inputs.job-name }} completed with status ${{ inputs.status }}. Run ID: ${{ inputs.github-run-id }}"
+      - name: Send Slack Notification Successful
+        uses: rtCamp/action-slack-notify@v2
+        if: ${{ success() }}
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_TITLE: ${{ inputs.s-slack-title }}
+          SLACK_COLOR: good
+          SLACK_MESSAGE: ${{ inputs.s-slack-message }}
+      - name: Send Slack Notification failureful
+        uses: rtCamp/action-slack-notify@v2
+        if: ${{ failure() }}
+        env:
+          SLACK_TITLE: ${{ inputs.f-slack-title }}
+          SLACK_COLOR: danger
+          SLACK_MESSAGE: ${{ inputs.f-slack-message }}

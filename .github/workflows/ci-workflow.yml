@@ -47,7 +47,5 @@ jobs:
     needs: building-stage
     uses: ./.github/workflows/slack-notification.yml
     with:
-      status: ${{ needs.building-stage }}
-      job-name: "Build and Lint"
-      github-run-id: ${{ github.run_id }}
-      slack-channel: "C069XE26M38"
+      f-slack-message: CI Failed! Please confirm.
+      s-slack-message: CI Completion! Good job.
