@@ -12,7 +12,7 @@ class HealthHandlerTest extends CatsEffectSuite {
   private[this] val healthService = Health.healthHandler[IO]
 
   test("Health check endpoint return OK") {
-    val request = Request[IO](GET, uri"/health")
+    val request = Request[IO](GET, uri"")
     val response = healthService.orNotFound.run(request)
 
     assertIO(response.map(_.status), Status.Ok)
