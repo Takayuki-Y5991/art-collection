@@ -7,7 +7,8 @@ object FlywayConfig {
   case class FlywaySetting(location: String, schemas: String)
 
   def migrate(dbConfig: Database): Unit = {
-    val flyway = Flyway.configure()
+    val flyway = Flyway
+      .configure()
       .dataSource(dbConfig.url, dbConfig.user, dbConfig.password)
       .load()
 

@@ -7,7 +7,7 @@ import org.http4s.dsl.io.GET
 import org.http4s.{Request, Status}
 import org.http4s.implicits.uri
 
-class HealthHandlerTest  extends CatsEffectSuite{
+class HealthHandlerTest extends CatsEffectSuite {
 
   private[this] val healthService = Health.healthHandler[IO]
 

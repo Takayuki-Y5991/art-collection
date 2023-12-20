@@ -20,18 +20,18 @@ object DatabaseConfig {
       )
     }
   }
-    def loadConfig: IO[Database] = IO {
-      val config = ConfigFactory.load()
-      config.as[Database]("db")
-    }
+  def loadConfig: IO[Database] = IO {
+    val config = ConfigFactory.load()
+    config.as[Database]("db")
+  }
 
-    def transactor: Resource[IO, Transactor[IO]] = Resource.eval(loadConfig.map { dbConfig =>
-      Transactor.fromDriverManager[IO](
-        dbConfig.driver,
-        dbConfig.url,
-        dbConfig.user,
-        dbConfig.password,
-        logHandler = None,
-      )
-    })
+  def transactor: Resource[IO, Transactor[IO]] = Resource.eval(loadConfig.map { dbConfig =>
+    Transactor.fromDriverManager[IO](
+      dbConfig.driver,
+      dbConfig.url,
+      dbConfig.user,
+      dbConfig.password,
+      logHandler = None
+    )
+  })
 }

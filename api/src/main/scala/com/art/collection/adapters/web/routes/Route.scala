@@ -7,6 +7,6 @@ import org.http4s.server.Router
 
 object Route {
   def httpApp[F[_]: Async](): HttpApp[F] = {
-    Router("/health" ->  healthHandler).orNotFound
+    Router("/health" -> healthHandler).orNotFound
   }
 }
