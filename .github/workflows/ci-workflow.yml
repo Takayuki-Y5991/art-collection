@@ -1,0 +1,79 @@
+name: CI workflows
+
+on:
+  push:
+    branches:
+      - "*"
+    paths:
+      - "app/src/**"
+  pull_request:
+    branches:
+      - "*"
+    paths:
+      - "app/src/**"
+
+jobs:
+  building-stage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.yarn
+            **/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        working-directory: ./app
+        run: yarn install
+
+      - name: Run linter
+        working-directory: ./app
+        run: yarn lint
+
+      - name: Build Docekr image
+        working-directory: ./app
+        run: docker build . -t app
+  # notify-slack:
+  #   if: always()
+  #   needs: building-stage
+  #   uses: ./.github/workflows/slack-notification.yml
+  #   with:
+  #     f-slack-message: CI Failed! Please confirm.
+  #     s-slack-message: CI Completion! Good job.
+  slack-notify:
+    runs-on: ubuntu-latest
+    needs: building-stage
+    steps:
+      - name: Send Slack Notification Successful
+        uses: rtCamp/action-slack-notify@v2
+        if: ${{ needs.building-stage.result == 'success' }}
+        env:
+          SLACK_USERNAME: CI Github Actions
+          SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_TITLE: Successfully🎉
+          SLACK_COLOR: good
+          SLACK_MESSAGE: CI Completion! Good job.
+      - name: Send Slack Notification failureful
+        uses: rtCamp/action-slack-notify@v2
+        if: ${{ needs.building-stage.result == 'failure' }}
+        env:
+          SLACK_USERNAME: CI Github Actions
+          SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_TITLE: Failurefully⚠️
+          SLACK_COLOR: danger
+          SLACK_MESSAGE: CI Failed! Please confirm.
