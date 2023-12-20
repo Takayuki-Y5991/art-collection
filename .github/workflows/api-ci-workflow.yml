@@ -39,7 +39,7 @@ jobs:
 
       - name: Run ScalaStyle
         working-directory: ./api
-        run: sbt scalafix --check
+        run: sbt scalafmtCheckAll
 
       - name: Run Muti Test
         working-directory: ./api
