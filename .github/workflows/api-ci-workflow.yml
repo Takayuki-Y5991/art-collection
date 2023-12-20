@@ -39,7 +39,7 @@ jobs:
 
       - name: Run ScalaStyle
         working-directory: ./api
-        run: sbt scalastyle
+        run: sbt scalafix --check
 
       - name: Run Muti Test
         working-directory: ./api
@@ -51,6 +51,7 @@ jobs:
 
   slack-notify:
     runs-on: ubuntu-latest
+    needs: building-stage
     steps:
       - name: Send Slack Notification Successful
         uses: rtCamp/action-slack-notify@v2
