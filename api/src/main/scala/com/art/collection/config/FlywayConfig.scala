@@ -1,7 +1,7 @@
-package config
+package com.art.collection.config
 
-import config.DatabaseConfig.Database
 import org.flywaydb.core.Flyway
+import com.art.collection.config.DatabaseConfig.Database
 
 object FlywayConfig {
   case class FlywaySetting(location: String, schemas: String)

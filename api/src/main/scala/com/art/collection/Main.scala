@@ -1,8 +1,8 @@
-import adapters.web.routes.Route.httpApp
+package com.art.collection
+
 import cats.effect.{ExitCode, IO, IOApp}
+import com.art.collection.adapters.web.routes.Route.httpApp
 import com.comcast.ip4s.{ipv4, port}
-import config.DatabaseConfig.{Database, loadConfig}
-import config.FlywayConfig.migrate
 import org.http4s.ember.server.EmberServerBuilder
 import org.typelevel.log4cats.LoggerFactory
 import org.typelevel.log4cats.slf4j.Slf4jFactory

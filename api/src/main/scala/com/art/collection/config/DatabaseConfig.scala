@@ -1,10 +1,11 @@
-package config
+package com.art.collection.config
 
 import cats.effect.{IO, Resource}
 import com.typesafe.config.{Config, ConfigFactory}
 import net.ceedubs.ficus.readers.ValueReader
 import net.ceedubs.ficus.Ficus.*
 import doobie.Transactor
+
 object DatabaseConfig {
   case class Database(url: String, user: String, password: String, driver: String)
 

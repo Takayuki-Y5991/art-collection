@@ -1,11 +1,12 @@
-package adapters.web.middleware
+package com.art.collection.adapter.web.middleware
 
-import cats.effect._
+import cats.effect.*
 import cats.effect.unsafe.IORuntime
-import org.http4s._
-import org.http4s.dsl.io._
+import com.art.collection.adapters.web.middleware.AuthMiddleware
+import org.http4s.*
+import org.http4s.dsl.io.*
 import org.http4s.headers.Authorization
-import org.http4s.implicits._
+import org.http4s.implicits.*
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

@@ -7,6 +7,7 @@ val catsEffectVersion = "3.3.0"
 val ficusVersion = "1.5.2"
 
 val flywayVersion = "9.22.3"
+val typeLevelVersion = "2.0.0-M1"
 
 lazy val root = project
   .in(file("."))
@@ -15,6 +16,14 @@ lazy val root = project
     version := "0.1.0-SNAPSHOT",
 
     scalaVersion := scala3Version,
+
+    // sbt-assembly プラグイン設定
+    assembly / mainClass := Some("com.art.collection.Main"),
+    assembly / assemblyJarName := "api.jar",
+    assembly / assemblyMergeStrategy := {
+      case PathList("META-INF", xs@_*) => MergeStrategy.discard
+      case _ => MergeStrategy.first
+    },
 
     libraryDependencies ++= Seq(
       "org.http4s" %% "http4s-ember-client" % http4sVersion,
@@ -29,6 +38,7 @@ lazy val root = project
       "com.iheart" %% "ficus" %  ficusVersion,
       "org.flywaydb" % "flyway-core" % flywayVersion,
       "org.scalameta" %% "munit" % "0.7.29" % Test,
+      "org.typelevel" %% "munit-cats-effect" % typeLevelVersion % Test,
       "org.tpolecat" %% "doobie-scalatest" % doobieVersion
     )
   )
