@@ -5,12 +5,12 @@ on:
     branches:
       - "*"
     paths:
-      - "api/src/**/*"
+      - "api/src/**"
   pull_request:
     branches:
       - "*"
     paths:
-      - "api/src/**/*"
+      - "api/src/**"
 
 jobs:
   building-stage:
