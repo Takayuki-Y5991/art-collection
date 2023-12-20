@@ -59,7 +59,7 @@ jobs:
     steps:
       - name: Send Slack Notification Successful
         uses: rtCamp/action-slack-notify@v2
-        if: ${{ success() }}
+        if: ${{ needs.building-stage.result == 'success' }}
         env:
           SLACK_USERNAME: CI Github Actions
           SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
@@ -69,7 +69,7 @@ jobs:
           SLACK_MESSAGE: CI Completion! Good job.
       - name: Send Slack Notification failureful
         uses: rtCamp/action-slack-notify@v2
-        if: ${{ failure() }}
+        if: ${{ needs.building-stage.result == 'failure' }}
         env:
           SLACK_USERNAME: CI Github Actions
           SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
